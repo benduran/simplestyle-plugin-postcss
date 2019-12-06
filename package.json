@@ -54,6 +54,8 @@
     "simplestyle-js": "^1.0.2"
   },
   "husky": {
-    "pre-push": "npm test"
+    "hooks": {
+      "pre-push": "npm test"
+    }
   }
 }
