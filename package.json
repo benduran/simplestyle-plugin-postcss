@@ -1,6 +1,6 @@
 {
   "name": "simplestyle-js-plugin-postcss",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "PostCSS integration with simplestyle-js to provide helpful utility and additional features to the zero-dependency simplestyle base",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
