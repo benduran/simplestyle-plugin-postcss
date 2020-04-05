@@ -6,7 +6,7 @@ A [simplestyle-js](https://github.com/benduran/simplestyle-plugin-postcss) **pos
 
 ## Usage
 ```
-import createStyles, { registerPostHook } from 'simplestyle-js';
+import { createStyles, registerPostHook } from 'simplestyle-js';
 import simplestylePostCSSPlugin from 'simplestyle-js-plugin-postcss';
 
 registerPostHook(simplestylePostCSSPlugin(
