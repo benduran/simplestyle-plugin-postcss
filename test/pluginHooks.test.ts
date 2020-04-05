@@ -1,14 +1,13 @@
 /* tslint:disable no-console */
 
 import autoprefixer from 'autoprefixer';
-import createStyles, { registerPostHook } from 'simplestyle-js';
-import sheetCache from 'simplestyle-js/dist/commonjs/sheetCache';
 
 import simpleStylePluginPostCSS from '../src';
+import { createStyles, registerPosthook, SimpleStyleRules } from 'simplestyle-js';
 
 describe('simplestyle-js-plugin-postcss', () => {
   beforeEach(() => {
-    sheetCache.clean();
+    Array.from(document.head.querySelectorAll('style')).forEach(s => s.remove());
   });
   it('Should validate that PostCSS just passes through the CSS when there are no option specified', () => {
     const r = {
@@ -18,28 +17,23 @@ describe('simplestyle-js-plugin-postcss', () => {
         transform: 'rotateY(180deg)',
       },
     };
-    registerPostHook(simpleStylePluginPostCSS([]));
-    const s = createStyles(r, false);
-    const [sheet] = sheetCache.getAll();
-    const rendered = sheet.getStyles();
+    registerPosthook(simpleStylePluginPostCSS([]));
+    const [s, rendered] = createStyles(r);
     expect(rendered).toContain(`.${s.passthroughRoot}`);
     expect(rendered).toContain('color:yellow;display:flex;transform:rotateY(180deg)');
   });
   it('Should validate that PostCSS (with Autoprefixer as a plugin) transforms the rules correctly', () => {
-    const r = {
-      transformRoot: {
-        transform: 'translateY(-50%)',
-        transition: 'all .2s ease-in-out',
+    const r: SimpleStyleRules = {
+      userScaleRoot: {
+        userSelect: 'none',
       },
     };
-    registerPostHook(simpleStylePluginPostCSS([autoprefixer()]));
-    const s = createStyles(r, false);
-    const [sheet] = sheetCache.getAll();
-    const rendered = sheet.getStyles();
-    expect(rendered).toContain(`.${s.transformRoot}`);
-    expect(rendered).toContain('transform:translateY(-50%);');
-    expect(rendered).toContain('-webkit-transform:translateY(-50%);');
-    expect(rendered).toContain('transition:all .2s ease-in-out;');
-    expect(rendered).toContain('-webkit-transition:all .2s ease-in-out;');
+    registerPosthook(simpleStylePluginPostCSS([autoprefixer()]));
+    const [s, rendered] = createStyles(r);
+    expect(rendered).toContain(`.${s.userScaleRoot}`);
+    expect(rendered).toContain('user-select:none;');
+    expect(rendered).toContain('-webkit-user-select:none;');
+    expect(rendered).toContain('-moz-user-select:none;');
+    expect(rendered).toContain('-ms-user-select:none;');
   });
 });

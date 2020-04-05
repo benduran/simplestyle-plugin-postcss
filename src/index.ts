@@ -1,13 +1,11 @@
 
 import postcss, { AcceptedPlugin, ProcessOptions } from 'postcss';
-import { SimpleStylePluginPostHook } from 'simplestyle-js/dist/commonjs/styleTypes';
+import { PosthookPlugin } from 'simplestyle-js';
 
 export default function simplestylePluginPostCSS(
   plugins: AcceptedPlugin[],
   processOptions?: ProcessOptions,
-): SimpleStylePluginPostHook {
+): PosthookPlugin {
   const p = postcss(plugins);
-  return (s) => {
-    s.sheetBuffer = p.process(s.sheetBuffer, processOptions).css;
-  };
+  return sheetContents => p.process(sheetContents, processOptions).css;
 }

@@ -4,7 +4,9 @@ module.exports = {
   transform: {
     '\.ts$': 'ts-jest',
   },
-  transformIgnorePatterns: [
-    '/!node_modules\\/simplestyle-js/',
-  ],
+  globals: {
+    'ts-jest': {
+      tsConfig: './tsconfig.json',
+    },
+  },
 };
